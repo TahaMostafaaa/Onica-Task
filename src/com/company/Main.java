@@ -34,12 +34,16 @@ public class Main {
         System.out.print(" Description: ");
         String description = inputScanner.nextLine();
         int count = 0;
-        while (fileScanner.hasNext())
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file.getPath(), true));
+        try {
         for(String line = ""; fileScanner.hasNext(); line = fileScanner.nextLine())
            count++;
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file.getPath(), true));
         bufferedWriter.append("\n" +(count+1)+ "," + title +"," + author + "," + description);
-        bufferedWriter.close();
+        }finally {
+            bufferedWriter.close();
+            System.out.println("Done");
+        }
+
 
     }
      public static void viewAllBooks() throws FileNotFoundException {
