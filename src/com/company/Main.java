@@ -1,38 +1,62 @@
 package com.company;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.net.URL;
+import java.io.*;
 import java.util.Scanner;
 
 public class Main {
 
-    static Scanner scanner = new Scanner(System.in);
+    static Scanner inputScanner = new Scanner(System.in);
+    static File file = new File("C:/Users/vdcg9145/Desktop/Play Ground/Onica-Task/src/com/company/data.txt");
+    static Scanner fileScanner;
 
-     public static void startUI() throws FileNotFoundException {
+    static {
+        try {
+            fileScanner = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Main() throws IOException {
+    }
+
+    public static void startUI() throws FileNotFoundException {
          System.out.println("==== Book Manager ====\n 1) View all books\n 2) Add a book\n 3) Edit a book\n 4) Search for a book\n 5) Save and exit\n Choose [1-5]: ");
-         if(scanner.nextInt() == 1){
+         if(inputScanner.nextInt() == 1){
              viewAllBooks();
          }
      }
+    public static void addBook() throws IOException {
+        System.out.print("==== Add a Book ====\nPlease enter the following information:\n Title: ");
+        String title = inputScanner.nextLine();
+        System.out.print(" Author: ");
+        String author = inputScanner.nextLine();
+        System.out.print(" Description: ");
+        String description = inputScanner.nextLine();
+        int count = 0;
+        while (fileScanner.hasNext())
+        for(String line = ""; fileScanner.hasNext(); line = fileScanner.nextLine())
+           count++;
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file.getPath(), true));
+        bufferedWriter.append("\n" +(count+1)+ "," + title +"," + author + "," + description);
+        bufferedWriter.close();
+
+    }
      public static void viewAllBooks() throws FileNotFoundException {
 
 //         URL main = Main.class.getResource("Main.class");
 //         System.out.println(main.getPath());
-         File file = new File("C:/Users/vdcg9145/Desktop/Play Ground/Onica-Task/out/production/Onica-Task/com/company/data.txt");
          System.out.println("==== View Books ====");
-         Scanner sc = new Scanner(file);
-         while (sc.hasNextLine())
+         while (fileScanner.hasNextLine())
              {
-                 String bookData[] = sc.nextLine().split(",");
-                 System.out.println("["+bookData[0]+"] "+bookData[1]);
+                 String bookData[] = fileScanner.nextLine().split(",");
+                 System.out.println("[" + bookData[0] + "] " + bookData[1]);
 
              }
      }
 
-    public static void main(String[] args) throws FileNotFoundException {
-        viewAllBooks();
+    public static void main(String[] args) throws IOException {
+        addBook();
 
     }
 }
