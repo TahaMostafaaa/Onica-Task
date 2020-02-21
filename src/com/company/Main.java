@@ -1,6 +1,7 @@
 package com.company;
 
 import java.io.*;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -9,7 +10,9 @@ import java.util.Scanner;
 public class Main {
 
     static Scanner inputScanner = new Scanner(System.in);
-    static File file = new File("C:/Users/vdcg9145/Desktop/Play Ground/Onica-Task/src/com/company/data.txt");
+//    URL main = Main.class.getResource("Main.class");
+    //System.out.println(main.getPath());
+    static File file = new File("src/com/company/data.txt");
     static Scanner fileScanner;
 
     static {
@@ -26,6 +29,7 @@ public class Main {
      }
     public static void addBook() throws IOException {
         System.out.print("==== Add a Book ====\nPlease enter the following information:\n Title: ");
+        inputScanner.nextLine();
         String title = inputScanner.nextLine();
         System.out.print(" Author: ");
         String author = inputScanner.nextLine();
@@ -39,7 +43,7 @@ public class Main {
         bufferedWriter.append("\n" +(count+1)+ "," + title +"," + author + "," + description);
         }finally {
             bufferedWriter.close();
-            System.out.format("Book [%s] Saved",count+1);
+            System.out.format("Book [%s] Saved\n",count+1);
         }
     }
 
@@ -116,8 +120,7 @@ public class Main {
 
      public static void viewAllBooks() throws FileNotFoundException {
 
-//         URL main = Main.class.getResource("Main.class");
-//         System.out.println(main.getPath());
+
          System.out.println("==== View Books ====");
          fileScanner = new Scanner(file);
          while (fileScanner.hasNextLine())
