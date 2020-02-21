@@ -73,8 +73,6 @@ public class Main {
 
         String newBookAfterUpdate = String.format("%d,%s,%s,%s",id,title,author,description);
         arrayList.set(id-1,newBookAfterUpdate);
-        System.out.println("==========================");
-        System.out.println(arrayList);
 
         BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file.getPath()));
         try {
@@ -84,6 +82,25 @@ public class Main {
             bufferedWriter.close();
             System.out.println("Saved");
         }
+
+    }
+    public static void searchForBook() throws FileNotFoundException {
+           System.out.print("To view details enter the book ID, to return press <Enter>.\n Book ID: ");
+           String id = inputScanner.nextLine();
+           if(id.equals("")) return;
+            fileScanner = new Scanner(file);
+        while (fileScanner.hasNextLine())
+        {
+            String bookData[] = fileScanner.nextLine().split(",");
+            if(bookData[0].equals(id) ){
+                System.out.format(" ID: %s\n Title: %s\n Author: %s\n Description: %s\n\n",bookData[0],bookData[1],bookData[2],bookData[3]);
+
+                break;
+            }
+
+        }
+
+       searchForBook();
 
     }
      public static void viewAllBooks() throws FileNotFoundException {
@@ -100,7 +117,7 @@ public class Main {
      }
 
     public static void main(String[] args) throws IOException {
-        editBook();
+        searchForBook();
 
     }
 }
